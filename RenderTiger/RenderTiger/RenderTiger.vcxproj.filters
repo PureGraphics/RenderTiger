@@ -74,12 +74,6 @@
     <ClCompile Include="render_triger_main_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_render_triger_main_window.cpp">
-      <Filter>GeneratedFiles\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_render_triger_main_window.cpp">
-      <Filter>GeneratedFiles\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Common\src\timer.cpp">
       <Filter>Common\src</Filter>
     </ClCompile>
@@ -88,6 +82,12 @@
     </ClCompile>
     <ClCompile Include="Test\cube.cpp">
       <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_qt5_dx11_app_framework.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_qt5_dx11_app_framework.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,13 +100,13 @@
     <CustomBuild Include="render_triger_main_window.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="DX\inc\qt5_dx11_app_framework.h">
+      <Filter>DX\inc</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_rendertiger.h">
       <Filter>GeneratedFiles</Filter>
-    </ClInclude>
-    <ClInclude Include="DX\inc\qt5_dx11_app_framework.h">
-      <Filter>DX\inc</Filter>
     </ClInclude>
     <ClInclude Include="Common\inc\timer.h">
       <Filter>Common\inc</Filter>

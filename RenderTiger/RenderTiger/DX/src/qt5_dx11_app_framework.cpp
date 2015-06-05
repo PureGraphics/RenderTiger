@@ -7,9 +7,8 @@
 
 #include <QGroupBox>
 
-qt5_dx11_app_framework::qt5_dx11_app_framework(QMainWindow *target)
-:
-_target_qmain_window(target),
+qt5_dx11_app_framework::qt5_dx11_app_framework(QWidget *parent)
+: QMainWindow(parent),
 _fps(60),
 _qtimer(nullptr),
 _device(nullptr),
@@ -21,9 +20,9 @@ _render_target_view(nullptr),
 _drive_type(D3D_DRIVER_TYPE_HARDWARE),
 _enable_4xmsaa(false) {
     _timer.start();
-    _client_w = target->width();
-    _client_h = target->height();
-    _set_win_id(target->winId());
+    _client_w = this->width();
+    _client_h = this->height();
+    _set_win_id(this->winId());
     ZeroMemory(&_viewport, sizeof(_viewport));
 }
 
@@ -62,9 +61,9 @@ void qt5_dx11_app_framework::run() {
             _qtimer->stop();
     }
     else {
-        _qtimer = new QTimer(_target_qmain_window);
+        _qtimer = new QTimer(this);
     }
-    QObject::connect(_qtimer, SIGNAL(timeout()), _target_qmain_window, SLOT(slot_on_timer()));
+    QObject::connect(_qtimer, SIGNAL(timeout()), this, SLOT(run_on_timer()));
     _qtimer->start(1000.0f / _fps);
 }
 
@@ -133,23 +132,43 @@ void qt5_dx11_app_framework::on_draw() {
 
 }
 
-void qt5_dx11_app_framework::on_mouse() {
+void qt5_dx11_app_framework::on_keyborad(QKeyEvent *event) {
 
 }
 
-void qt5_dx11_app_framework::on_keyborad() {
+void qt5_dx11_app_framework::on_mouse_press(QMouseEvent *event) {
 
+}
+
+void qt5_dx11_app_framework::on_mouse_release(QMouseEvent *event) {
+
+}
+
+void qt5_dx11_app_framework::on_mouse_move(QMouseEvent *event) {
+
+}
+
+void qt5_dx11_app_framework::run_on_timer() {
+    _calculate_frame_stats();
+    on_update();
+    on_draw();
+}
+
+void qt5_dx11_app_framework::mousePressEvent(QMouseEvent *event) {
+    on_mouse_press(event);
+}
+
+void qt5_dx11_app_framework::mouseReleaseEvent(QMouseEvent *event) {
+    on_mouse_release(event);
+}
+
+void qt5_dx11_app_framework::mouseMoveEvent(QMouseEvent *event) {
+    on_mouse_move(event);
 }
 
 void qt5_dx11_app_framework::_set_win_id(WId wid) {
     _wid = wid;
     _hwnd = (HWND)wid;
-}
-
-void qt5_dx11_app_framework::_run_on_timer() {
-    _calculate_frame_stats();
-    on_update();
-    on_draw();
 }
 
 bool qt5_dx11_app_framework::_init_dx11() {

@@ -1,31 +1,14 @@
 #include "render_triger_main_window.h"
 
 #include <assert.h>
+#include <QMouseEvent>
 
 struct Vertex {
     XMFLOAT3 Pos;
     XMFLOAT4 Color;
 };
 
-cube::cube(QMainWindow *target)
-:qt5_dx11_app_framework(target), _box_vb(0), _box_ib(0), _fx(0), _tech(0),
-_mat_wvp(0), _input_layout(0),
-_theta(1.5f * XM_PI), _phi(0.25f * XM_PI), _radius(5.0f)
-{
-    XMMATRIX I = XMMatrixIdentity();
-    XMStoreFloat4x4(&_mat_world, I);
-    XMStoreFloat4x4(&_mat_view, I);
-    XMStoreFloat4x4(&_mat_proj, I);
-}
-
-cube::~cube() {
-    safe_release(_box_vb);
-    safe_release(_box_ib);
-    safe_release(_fx);
-    safe_release(_input_layout);
-}
-
-bool cube::init() {
+bool render_triger_main_window::init() {
     if (!qt5_dx11_app_framework::init())
         return false;
     build_vertex_buffer();
@@ -35,7 +18,7 @@ bool cube::init() {
     return true;
 }
 
-void cube::on_resize() {
+void render_triger_main_window::on_resize() {
     qt5_dx11_app_framework::on_resize();
 
     //The windows resized, so update the aspect ratio and recomputed the projection matrix.
@@ -43,7 +26,7 @@ void cube::on_resize() {
     XMStoreFloat4x4(&_mat_proj, P);
 }
 
-void cube::on_update() {
+void render_triger_main_window::on_update() {
     //Convert Spherical to Cartesian coordinates.
     float x = _radius * sinf(_phi) * cosf(_theta);
     float z = _radius * sinf(_phi) * sinf(_theta);
@@ -58,7 +41,7 @@ void cube::on_update() {
     XMStoreFloat4x4(&_mat_view, V);
 }
 
-void cube::on_draw() {
+void render_triger_main_window::on_draw() {
     _context->ClearRenderTargetView(_render_target_view, reinterpret_cast<const float*>(&Colors::Black));
     _context->ClearDepthStencilView(_depth_stencil_view, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     _context->IASetInputLayout(_input_layout);
@@ -88,15 +71,49 @@ void cube::on_draw() {
     HR(_swap_chain->Present(0, 0));
 }
 
-void cube::on_mouse() {
+void render_triger_main_window::on_keyborad(QKeyEvent *event) {
 
 }
 
-void cube::on_keyborad() {
-
+void render_triger_main_window::on_mouse_press(QMouseEvent *event) {
+    _last_mouse_pos.x = event->x();
+    _last_mouse_pos.y = event->y();
+    _mouse_btn_when_pressed = event->button();
+    SetCapture(get_win_hwnd());
 }
 
-void cube::build_vertex_buffer() {
+void render_triger_main_window::on_mouse_release(QMouseEvent *event) {
+    ReleaseCapture();
+}
+
+template<typename T>
+static T _clamp(const T& x, const T& low, const T& high) {
+    return x < low ? low : (x > high ? high : x);
+}
+
+void render_triger_main_window::on_mouse_move(QMouseEvent *event) {
+    int x = event->x();
+    int y = event->y();
+    if (_mouse_btn_when_pressed == Qt::LeftButton) {
+        float dx = XMConvertToRadians(0.25f * (float)(x - _last_mouse_pos.x));
+        float dy = XMConvertToRadians(0.25f * (float)(y - _last_mouse_pos.y));
+        _theta += dx;
+        _phi += dy;
+        
+        _phi = _clamp(_phi, 0.1f, XM_PI - 0.1f);
+    }
+    else if (_mouse_btn_when_pressed == Qt::RightButton) {
+        float dx = 0.005f * static_cast<float>(x - _last_mouse_pos.x);
+        float dy = 0.005f * static_cast<float>(y - _last_mouse_pos.y);
+        _radius += dx - dy;
+        _radius = _clamp(_radius, 3.0f, 15.0f);
+    }
+
+    _last_mouse_pos.x = x;
+    _last_mouse_pos.y = y;
+}
+
+void render_triger_main_window::build_vertex_buffer() {
     //Create Vertex Buffer.
     Vertex vertices[] = {
         { XMFLOAT3(-1.0f, -1.0f, -1.0f), reinterpret_cast<const float*>(&Colors::White) },
@@ -153,7 +170,7 @@ void cube::build_vertex_buffer() {
     HR(_device->CreateBuffer(&ibd, &iinitData, &_box_ib));
 }
 
-void cube::build_fx() {
+void render_triger_main_window::build_fx() {
     DWORD shaderFlags = 0;
 #if defined(DEBUG) || defined(_DEBUG)
     shaderFlags |= D3D10_SHADER_DEBUG;
@@ -186,7 +203,7 @@ void cube::build_fx() {
     _mat_wvp = _fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 }
 
-void cube::build_vertex_layout() {
+void render_triger_main_window::build_vertex_layout() {
     //Create the vertex input layout.
     D3D11_INPUT_ELEMENT_DESC vertex_desc[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -203,17 +220,24 @@ void cube::build_vertex_layout() {
 }
 
 render_triger_main_window::render_triger_main_window(QWidget *parent)
-: QMainWindow(parent) {
+: qt5_dx11_app_framework(parent),
+_box_vb(0), _box_ib(0), _fx(0), _tech(0),
+_mat_wvp(0), _input_layout(0),
+_theta(1.5f * XM_PI), _phi(0.25f * XM_PI), _radius(5.0f) {
     ui.setupUi(this);
-    _cube = new cube(this);
-    assert(_cube->init());
-    _cube->run();
+
+    XMMATRIX I = XMMatrixIdentity();
+    XMStoreFloat4x4(&_mat_world, I);
+    XMStoreFloat4x4(&_mat_view, I);
+    XMStoreFloat4x4(&_mat_proj, I);
+
+    assert(init());
+    run();
 }
 
 render_triger_main_window::~render_triger_main_window() {
-    delete _cube;
-}
-
-void render_triger_main_window::slot_on_timer() {
-    _cube->_run_on_timer();
+    safe_release(_box_vb);
+    safe_release(_box_ib);
+    safe_release(_fx);
+    safe_release(_input_layout);
 }

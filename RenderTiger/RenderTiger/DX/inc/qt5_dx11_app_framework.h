@@ -7,9 +7,10 @@
 
 #include "timer.h"
 
-class qt5_dx11_app_framework : QObject {
+class qt5_dx11_app_framework : public QMainWindow {
+    Q_OBJECT
 public:
-    qt5_dx11_app_framework(QMainWindow *target);
+    qt5_dx11_app_framework(QWidget *parent = 0);
     virtual ~qt5_dx11_app_framework();
 public:
     void set_fps(unsigned int fps);
@@ -22,10 +23,16 @@ public:
     virtual void on_resize();
     virtual void on_update();
     virtual void on_draw();
-    virtual void on_mouse();
-    virtual void on_keyborad();
-public://slots doesn't work.
-    void _run_on_timer();
+    virtual void on_keyborad(QKeyEvent *event);
+    virtual void on_mouse_press(QMouseEvent *event);
+    virtual void on_mouse_release(QMouseEvent *event);
+    virtual void on_mouse_move(QMouseEvent *event);
+public slots:
+    void run_on_timer();
+protected: //Qt5 inner methods.
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 private:
     void _set_win_id(WId wid);
     bool _init_dx11();
@@ -45,7 +52,6 @@ protected:
     bool _enable_4xmsaa;
     unsigned int _msaa_quality_level;
 private:
-    QMainWindow *_target_qmain_window;
     WId  _wid;
     HWND _hwnd;
     timer _timer;
