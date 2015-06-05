@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="DX">
+      <UniqueIdentifier>{47ab357e-4971-4bac-a75e-f8abdb9b715e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL">
+      <UniqueIdentifier>{ed2ba4d7-4c21-4d21-8a2b-adef3cde7ec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UIFiles">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="GeneratedFiles">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="GeneratedFiles\Debug">
+      <UniqueIdentifier>{920bb709-2663-4c7b-a95e-41136ff538a6}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="GeneratedFiles\Release">
+      <UniqueIdentifier>{769e698d-dda1-4c68-bba3-78a46783fcf3}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="DX\inc">
+      <UniqueIdentifier>{544a748f-5d94-4ac3-96d9-f813d1eb1306}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DX\src">
+      <UniqueIdentifier>{80a6dee0-64bc-45c0-b0e1-166229f85721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL\inc">
+      <UniqueIdentifier>{51f6a54d-1943-48d5-ab10-b3a339263e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL\src">
+      <UniqueIdentifier>{05428f7a-62c0-41a6-b733-cfbd375643a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{6173860f-7e0c-4675-9bc8-282adabf1631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\inc">
+      <UniqueIdentifier>{f9b167cd-d1c5-4831-b190-767f57a23a04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\src">
+      <UniqueIdentifier>{15da15b9-af0f-40f1-91ce-216f73091d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{6cdc7f16-ea0f-40ee-a8d5-707bb9a7241d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_rendertiger.cpp">
+      <Filter>GeneratedFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="render_triger_main_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_render_triger_main_window.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_render_triger_main_window.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\src\timer.cpp">
+      <Filter>Common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DX\src\qt5_dx11_app_framework.cpp">
+      <Filter>DX\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\cube.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="rendertiger.qrc">
+      <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UIFiles\rendertiger.ui">
+      <Filter>UIFiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="render_triger_main_window.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles\ui_rendertiger.h">
+      <Filter>GeneratedFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DX\inc\qt5_dx11_app_framework.h">
+      <Filter>DX\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\inc\timer.h">
+      <Filter>Common\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="DX\inc\dx11_utils.h">
+      <Filter>DX\inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

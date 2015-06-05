@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RenderTigerClass</class>
+ <widget class="QMainWindow" name="RenderTigerClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>996</width>
+    <height>928</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>50</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>RenderTiger</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
+   <zorder>label</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>textEdit</zorder>
+   <zorder>textEdit</zorder>
+   <zorder>label</zorder>
+   <zorder>lineEdit</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>textEdit</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionTest">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actionHello">
+   <property name="text">
+    <string>Hello</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
