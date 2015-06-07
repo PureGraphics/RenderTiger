@@ -6,6 +6,7 @@
 
 #include "ui_rendertiger.h"
 #include "dx11_preview_window.h"
+#include "dx11_fx_editor_window.h"
 
 #include <xnamath.h>
 #include "d3dx11effect.h"
@@ -18,13 +19,17 @@ public:
     ~render_tiger_main_window();
 public:
     void on_preview_window_close();
+    void on_fx_editor_close();
 private:
     void _init_events();
 private slots:
     void _on_action_preview(bool checked = false);
+    void _on_action_shader_fx(bool checked = false);
 private:
     Ui::render_tiger_main_window_ui _ui;
+
     dx11_preview_window *_preview_window;
+    dx11_fx_editor_window *_fx_editor;
 };
 
 #endif

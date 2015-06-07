@@ -104,6 +104,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_dx11_preview_window.cpp">
       <Filter>GeneratedFiles\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dx11_fx_editor_window.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dx11_fx_editor_window.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="DX\src\dx11_fx_editor_window.cpp">
+      <Filter>DX\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="rendertiger.qrc">
@@ -124,6 +133,12 @@
     <CustomBuild Include="render_tiger_main_window.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="UIFiles\dx11_fx_editor_window.ui">
+      <Filter>UIFiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DX\inc\dx11_fx_editor_window.h">
+      <Filter>DX\inc</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_rendertiger.h">
@@ -136,6 +151,9 @@
       <Filter>DX\inc</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_dx11_preview_window.h">
+      <Filter>GeneratedFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dx11_fx_editor_window.h">
       <Filter>GeneratedFiles</Filter>
     </ClInclude>
   </ItemGroup>

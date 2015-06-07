@@ -38,6 +38,7 @@ public:
     QAction *actionOutput;
     QAction *actionPreview;
     QAction *actionGuanyy;
+    QAction *actionShader_fx;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QMdiArea *mdiArea;
@@ -83,6 +84,9 @@ public:
         actionPreview->setCheckable(true);
         actionGuanyy = new QAction(render_tiger_main_window_ui);
         actionGuanyy->setObjectName(QStringLiteral("actionGuanyy"));
+        actionShader_fx = new QAction(render_tiger_main_window_ui);
+        actionShader_fx->setObjectName(QStringLiteral("actionShader_fx"));
+        actionShader_fx->setCheckable(true);
         centralWidget = new QWidget(render_tiger_main_window_ui);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -133,6 +137,7 @@ public:
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
         menuBar->addAction(menu_4->menuAction());
+        menu_3->addAction(actionShader_fx);
         menu_3->addAction(actionPreview);
         menu_4->addAction(actionGuanyy);
 
@@ -153,6 +158,7 @@ public:
         actionOutput->setText(QApplication::translate("render_tiger_main_window_ui", "Output", 0));
         actionPreview->setText(QApplication::translate("render_tiger_main_window_ui", "\351\242\204\350\247\210", 0));
         actionGuanyy->setText(QApplication::translate("render_tiger_main_window_ui", "\345\205\263\344\272\216", 0));
+        actionShader_fx->setText(QApplication::translate("render_tiger_main_window_ui", "\347\274\226\350\276\221Shader(FX)", 0));
         menu->setTitle(QApplication::translate("render_tiger_main_window_ui", "\346\226\207\344\273\266", 0));
         menu_2->setTitle(QApplication::translate("render_tiger_main_window_ui", "\347\274\226\350\276\221", 0));
         menu_3->setTitle(QApplication::translate("render_tiger_main_window_ui", "\350\247\206\345\233\276", 0));
