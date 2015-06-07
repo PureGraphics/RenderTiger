@@ -44,6 +44,10 @@ void dx11_fx_editor_window::_init_events() {
 
 void dx11_fx_editor_window::_on_contents_changed() {
     _curr_text = _ui.text_editor->document()->toPlainText();
+    if (_curr_text.endsWith("\n")) {
+        return;
+    }
+    _curr_text = _curr_text.replace("\n", "<br/>");
     QString temp = _curr_text;
     for (auto it = _keywords.begin(); it != _keywords.end(); ++it) {
         _curr_text = _curr_text.replace(*it, QString("<font color='#0000ff'>") + (*it) + QString("</font>"));
