@@ -29,7 +29,7 @@ class Ui_dx11_fx_editor_window
 public:
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
-    QTextEdit *textEdit;
+    QTextEdit *text_editor;
     QMenuBar *menubar;
     QStatusBar *statusbar;
     QToolBar *toolBar;
@@ -43,14 +43,14 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        textEdit = new QTextEdit(centralwidget);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
+        text_editor = new QTextEdit(centralwidget);
+        text_editor->setObjectName(QStringLiteral("text_editor"));
         QFont font;
         font.setFamily(QStringLiteral("Consolas"));
-        font.setPointSize(12);
-        textEdit->setFont(font);
+        font.setPointSize(14);
+        text_editor->setFont(font);
 
-        horizontalLayout->addWidget(textEdit);
+        horizontalLayout->addWidget(text_editor);
 
         dx11_fx_editor_window->setCentralWidget(centralwidget);
         menubar = new QMenuBar(dx11_fx_editor_window);
