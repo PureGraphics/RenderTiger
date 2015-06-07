@@ -71,9 +71,6 @@
     <ClCompile Include="GeneratedFiles\qrc_rendertiger.cpp">
       <Filter>GeneratedFiles</Filter>
     </ClCompile>
-    <ClCompile Include="render_triger_main_window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Common\src\timer.cpp">
       <Filter>Common\src</Filter>
     </ClCompile>
@@ -89,6 +86,24 @@
     <ClCompile Include="GeneratedFiles\Release\moc_qt5_dx11_app_framework.cpp">
       <Filter>GeneratedFiles\Release</Filter>
     </ClCompile>
+    <ClCompile Include="DX\src\dx11_preview_window.cpp">
+      <Filter>DX\src</Filter>
+    </ClCompile>
+    <ClCompile Include="render_tiger_main_window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_render_tiger_main_window.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_render_tiger_main_window.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_dx11_preview_window.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_dx11_preview_window.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="rendertiger.qrc">
@@ -97,11 +112,17 @@
     <CustomBuild Include="UIFiles\rendertiger.ui">
       <Filter>UIFiles</Filter>
     </CustomBuild>
-    <CustomBuild Include="render_triger_main_window.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="DX\inc\qt5_dx11_app_framework.h">
       <Filter>DX\inc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DX\inc\dx11_preview_window.h">
+      <Filter>DX\inc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UIFiles\dx11_preview_window.ui">
+      <Filter>UIFiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="render_tiger_main_window.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +134,9 @@
     </ClInclude>
     <ClInclude Include="DX\inc\dx11_utils.h">
       <Filter>DX\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_dx11_preview_window.h">
+      <Filter>GeneratedFiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

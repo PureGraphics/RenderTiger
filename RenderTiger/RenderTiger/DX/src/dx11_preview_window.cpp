@@ -1,4 +1,6 @@
-#include "render_triger_main_window.h"
+#include "dx11_preview_window.h"
+
+#include "render_tiger_main_window.h"
 
 #include <assert.h>
 #include <QMouseEvent>
@@ -8,9 +10,35 @@ struct Vertex {
     XMFLOAT4 Color;
 };
 
-bool render_triger_main_window::init() {
+dx11_preview_window::dx11_preview_window(QWidget *parent)
+: qt5_dx11_app_framework(parent), _parent(parent),
+_box_vb(0), _box_ib(0), _fx(0), _tech(0),
+_mat_wvp(0), _input_layout(0),
+_theta(1.5f * XM_PI), _phi(0.25f * XM_PI), _radius(5.0f) {
+    _ui.setupUi(this);
+
+    XMMATRIX I = XMMatrixIdentity();
+    XMStoreFloat4x4(&_mat_world, I);
+    XMStoreFloat4x4(&_mat_view, I);
+    XMStoreFloat4x4(&_mat_proj, I);
+
+    setMinimumSize(400, 400);
+
+    assert(init());
+    run();
+}
+
+dx11_preview_window::~dx11_preview_window() {
+    safe_release(_box_vb);
+    safe_release(_box_ib);
+    safe_release(_fx);
+    safe_release(_input_layout);
+}
+
+bool dx11_preview_window::init() {
     if (!qt5_dx11_app_framework::init())
         return false;
+
     build_vertex_buffer();
     build_fx();
     build_vertex_layout();
@@ -18,15 +46,15 @@ bool render_triger_main_window::init() {
     return true;
 }
 
-void render_triger_main_window::on_resize() {
-    qt5_dx11_app_framework::on_resize();
+void dx11_preview_window::on_resize(QResizeEvent *event) {
+    qt5_dx11_app_framework::on_resize(event);
 
     //The windows resized, so update the aspect ratio and recomputed the projection matrix.
     XMMATRIX P = XMMatrixPerspectiveFovLH(0.25f * XM_PI, get_aspect_radio(), 1.0f, 1000.0f);
     XMStoreFloat4x4(&_mat_proj, P);
 }
 
-void render_triger_main_window::on_update() {
+void dx11_preview_window::on_update() {
     //Convert Spherical to Cartesian coordinates.
     float x = _radius * sinf(_phi) * cosf(_theta);
     float z = _radius * sinf(_phi) * sinf(_theta);
@@ -41,7 +69,7 @@ void render_triger_main_window::on_update() {
     XMStoreFloat4x4(&_mat_view, V);
 }
 
-void render_triger_main_window::on_draw() {
+void dx11_preview_window::on_draw() {
     _context->ClearRenderTargetView(_render_target_view, reinterpret_cast<const float*>(&Colors::Black));
     _context->ClearDepthStencilView(_depth_stencil_view, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     _context->IASetInputLayout(_input_layout);
@@ -71,18 +99,18 @@ void render_triger_main_window::on_draw() {
     HR(_swap_chain->Present(0, 0));
 }
 
-void render_triger_main_window::on_keyborad(QKeyEvent *event) {
+void dx11_preview_window::on_keyborad(QKeyEvent *event) {
 
 }
 
-void render_triger_main_window::on_mouse_press(QMouseEvent *event) {
+void dx11_preview_window::on_mouse_press(QMouseEvent *event) {
     _last_mouse_pos.x = event->x();
     _last_mouse_pos.y = event->y();
     _mouse_btn_when_pressed = event->button();
     SetCapture(get_win_hwnd());
 }
 
-void render_triger_main_window::on_mouse_release(QMouseEvent *event) {
+void dx11_preview_window::on_mouse_release(QMouseEvent *event) {
     ReleaseCapture();
 }
 
@@ -91,7 +119,7 @@ static T _clamp(const T& x, const T& low, const T& high) {
     return x < low ? low : (x > high ? high : x);
 }
 
-void render_triger_main_window::on_mouse_move(QMouseEvent *event) {
+void dx11_preview_window::on_mouse_move(QMouseEvent *event) {
     int x = event->x();
     int y = event->y();
     if (_mouse_btn_when_pressed == Qt::LeftButton) {
@@ -99,7 +127,7 @@ void render_triger_main_window::on_mouse_move(QMouseEvent *event) {
         float dy = XMConvertToRadians(0.25f * (float)(y - _last_mouse_pos.y));
         _theta += dx;
         _phi += dy;
-        
+
         _phi = _clamp(_phi, 0.1f, XM_PI - 0.1f);
     }
     else if (_mouse_btn_when_pressed == Qt::RightButton) {
@@ -113,7 +141,14 @@ void render_triger_main_window::on_mouse_move(QMouseEvent *event) {
     _last_mouse_pos.y = y;
 }
 
-void render_triger_main_window::build_vertex_buffer() {
+void dx11_preview_window::closeEvent(QCloseEvent *event) {
+    QMainWindow::closeEvent(event);
+    //How to do this correct? it looks like shit...
+    render_tiger_main_window *main_wnd = (render_tiger_main_window*)_parent;
+    main_wnd->on_preview_window_close();
+}
+
+void dx11_preview_window::build_vertex_buffer() {
     //Create Vertex Buffer.
     Vertex vertices[] = {
         { XMFLOAT3(-1.0f, -1.0f, -1.0f), reinterpret_cast<const float*>(&Colors::White) },
@@ -170,7 +205,7 @@ void render_triger_main_window::build_vertex_buffer() {
     HR(_device->CreateBuffer(&ibd, &iinitData, &_box_ib));
 }
 
-void render_triger_main_window::build_fx() {
+void dx11_preview_window::build_fx() {
     DWORD shaderFlags = 0;
 #if defined(DEBUG) || defined(_DEBUG)
     shaderFlags |= D3D10_SHADER_DEBUG;
@@ -203,7 +238,7 @@ void render_triger_main_window::build_fx() {
     _mat_wvp = _fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 }
 
-void render_triger_main_window::build_vertex_layout() {
+void dx11_preview_window::build_vertex_layout() {
     //Create the vertex input layout.
     D3D11_INPUT_ELEMENT_DESC vertex_desc[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -217,27 +252,4 @@ void render_triger_main_window::build_vertex_layout() {
         pass_desc.pIAInputSignature,
         pass_desc.IAInputSignatureSize,
         &_input_layout));
-}
-
-render_triger_main_window::render_triger_main_window(QWidget *parent)
-: qt5_dx11_app_framework(parent),
-_box_vb(0), _box_ib(0), _fx(0), _tech(0),
-_mat_wvp(0), _input_layout(0),
-_theta(1.5f * XM_PI), _phi(0.25f * XM_PI), _radius(5.0f) {
-    ui.setupUi(this);
-
-    XMMATRIX I = XMMatrixIdentity();
-    XMStoreFloat4x4(&_mat_world, I);
-    XMStoreFloat4x4(&_mat_view, I);
-    XMStoreFloat4x4(&_mat_proj, I);
-
-    assert(init());
-    run();
-}
-
-render_triger_main_window::~render_triger_main_window() {
-    safe_release(_box_vb);
-    safe_release(_box_ib);
-    safe_release(_fx);
-    safe_release(_input_layout);
 }

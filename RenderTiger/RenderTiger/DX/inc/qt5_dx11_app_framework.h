@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QMdiSubWindow>
+
 #include <d3d11.h>
 
 #include "timer.h"
@@ -20,7 +22,7 @@ public:
     void run();
 public:
     virtual bool init();
-    virtual void on_resize();
+    virtual void on_resize(QResizeEvent *event);
     virtual void on_update();
     virtual void on_draw();
     virtual void on_keyborad(QKeyEvent *event);
@@ -33,6 +35,8 @@ protected: //Qt5 inner methods.
     void mousePressEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
+
+    void resizeEvent(QResizeEvent *event) override;
 private:
     void _set_win_id(WId wid);
     bool _init_dx11();

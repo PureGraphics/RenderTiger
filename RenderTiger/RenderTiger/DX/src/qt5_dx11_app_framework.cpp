@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include <QGroupBox>
+#include <QResizeEvent>
 
 qt5_dx11_app_framework::qt5_dx11_app_framework(QWidget *parent)
 : QMainWindow(parent),
@@ -73,10 +74,18 @@ bool qt5_dx11_app_framework::init() {
     return true;
 }
 
-void qt5_dx11_app_framework::on_resize() {
+void qt5_dx11_app_framework::on_resize(QResizeEvent *event) {
     assert(_context);
     assert(_device);
     assert(_swap_chain);
+
+    if (event != nullptr) {
+        _client_w = event->size().width();
+        _client_h = event->size().height();
+    }
+
+    if (_client_w <= 0) _client_w = 1;
+    if (_client_h <= 0) _client_h = 1;
 
     safe_release(_render_target_view);
     safe_release(_depth_stencil_view);
@@ -166,6 +175,10 @@ void qt5_dx11_app_framework::mouseMoveEvent(QMouseEvent *event) {
     on_mouse_move(event);
 }
 
+void qt5_dx11_app_framework::resizeEvent(QResizeEvent *event) {
+    on_resize(event);
+}
+
 void qt5_dx11_app_framework::_set_win_id(WId wid) {
     _wid = wid;
     _hwnd = (HWND)wid;
@@ -247,7 +260,7 @@ bool qt5_dx11_app_framework::_init_dx11() {
     safe_release(dxgi_adapter);
     safe_release(dxgi_factory);
 
-    on_resize();
+    on_resize(nullptr);
 
     return true;
 }

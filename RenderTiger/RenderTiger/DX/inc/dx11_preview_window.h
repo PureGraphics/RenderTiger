@@ -1,35 +1,39 @@
-#ifndef RENDERTIGER_H
-#define RENDERTIGER_H
+#ifndef dx11_preview_window_h
+#define dx11_preview_window_h
 
 #include <QMainWindow>
-#include "ui_rendertiger.h"
 
 #include "qt5_dx11_app_framework.h"
+#include "ui_dx11_preview_window.h"
 
 #include <xnamath.h>
 #include "d3dx11effect.h"
 #include "dx11_utils.h"
 
-class render_triger_main_window : public qt5_dx11_app_framework {
+class dx11_preview_window : public qt5_dx11_app_framework {
+    Q_OBJECT
 public:
-    render_triger_main_window(QWidget *parent = 0);
-    ~render_triger_main_window();
+    dx11_preview_window(QWidget *parent);
+    ~dx11_preview_window();
 public:
     bool init() override;
-    void on_resize() override;
+    void on_resize(QResizeEvent *event) override;
     void on_update() override;
     void on_draw() override;
     void on_keyborad(QKeyEvent *event) override;
     void on_mouse_press(QMouseEvent *event) override;
     void on_mouse_release(QMouseEvent *event) override;
     void on_mouse_move(QMouseEvent *event) override;
+protected: //override Qt inner methods.
+    void closeEvent(QCloseEvent *event) override;
 private:
     void build_vertex_buffer();
     void build_fx();
     void build_vertex_layout();
 private:
-    Ui::RenderTigerClass ui;
-
+    Ui::dx11_preview_window _ui;
+    QWidget *_parent;
+private:
     ID3D11Buffer *_box_vb;
     ID3D11Buffer *_box_ib;
     ID3DX11Effect *_fx;
