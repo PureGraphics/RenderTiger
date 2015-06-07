@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="RenderTiger">
+    <qresource prefix="/RenderTiger">
+        <file alias="Logo">Logo/Tiger_logo.jpg</file>
     </qresource>
 </RCC>

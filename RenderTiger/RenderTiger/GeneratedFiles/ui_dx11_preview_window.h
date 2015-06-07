@@ -29,6 +29,9 @@ public:
         if (dx11_preview_window->objectName().isEmpty())
             dx11_preview_window->setObjectName(QStringLiteral("dx11_preview_window"));
         dx11_preview_window->resize(600, 600);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/RenderTiger/Logo"), QSize(), QIcon::Normal, QIcon::Off);
+        dx11_preview_window->setWindowIcon(icon);
         centralwidget = new QWidget(dx11_preview_window);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         dx11_preview_window->setCentralWidget(centralwidget);

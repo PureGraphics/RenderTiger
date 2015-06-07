@@ -13,8 +13,14 @@
   <property name="windowTitle">
    <string>预览-DX11</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../rendertiger.qrc">
+    <normaloff>:/RenderTiger/Logo</normaloff>:/RenderTiger/Logo</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../rendertiger.qrc"/>
+ </resources>
  <connections/>
 </ui>

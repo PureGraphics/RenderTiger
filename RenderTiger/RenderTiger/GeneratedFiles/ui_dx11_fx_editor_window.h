@@ -39,6 +39,10 @@ public:
         if (dx11_fx_editor_window->objectName().isEmpty())
             dx11_fx_editor_window->setObjectName(QStringLiteral("dx11_fx_editor_window"));
         dx11_fx_editor_window->resize(600, 600);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/RenderTiger/Logo"), QSize(), QIcon::Normal, QIcon::Off);
+        dx11_fx_editor_window->setWindowIcon(icon);
+        dx11_fx_editor_window->setWindowOpacity(1);
         centralwidget = new QWidget(dx11_fx_editor_window);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);

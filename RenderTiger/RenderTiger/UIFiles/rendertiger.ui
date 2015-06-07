@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>RenderTiger</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../rendertiger.qrc">
+    <normaloff>:/RenderTiger/Logo</normaloff>:/RenderTiger/Logo</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
@@ -172,6 +176,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../rendertiger.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -64,6 +64,9 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(render_tiger_main_window_ui->sizePolicy().hasHeightForWidth());
         render_tiger_main_window_ui->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/RenderTiger/Logo"), QSize(), QIcon::Normal, QIcon::Off);
+        render_tiger_main_window_ui->setWindowIcon(icon);
         render_tiger_main_window_ui->setAutoFillBackground(true);
         actionTest = new QAction(render_tiger_main_window_ui);
         actionTest->setObjectName(QStringLiteral("actionTest"));
