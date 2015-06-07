@@ -25,6 +25,7 @@ private:
 
     QList<QString> _keywords;
     QString _curr_text;
+    QString _prev_text;
 };
 
 #endif

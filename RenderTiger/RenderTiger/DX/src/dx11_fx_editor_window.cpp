@@ -2,7 +2,8 @@
 #include "render_tiger_main_window.h"
 
 dx11_fx_editor_window::dx11_fx_editor_window(QWidget *parent)
-: QMainWindow(parent), _parent(parent) {
+: QMainWindow(parent), _parent(parent),
+_curr_text(""), _prev_text("") {
     _ui.setupUi(this);
     _init_keywords();
     _init_events();
@@ -35,7 +36,18 @@ void dx11_fx_editor_window::_init_keywords() {
     _keywords.push_back("vector");
     _keywords.push_back("matrix");
     _keywords.push_back("texture");
-    //TODO......
+    _keywords.push_back("struct");
+    _keywords.push_back("cbuffer");
+    _keywords.push_back("POSITION");
+    _keywords.push_back("COLOR");
+    _keywords.push_back("SV_POSITION");
+    _keywords.push_back("return");
+    _keywords.push_back("mul");
+    _keywords.push_back("pass");
+    _keywords.push_back("SetVertexShader");
+    _keywords.push_back("SetGeometryShader");
+    _keywords.push_back("SetPixelShader");
+    _keywords.push_back("NULL");
 }
 
 void dx11_fx_editor_window::_init_events() {
@@ -43,20 +55,24 @@ void dx11_fx_editor_window::_init_events() {
 }
 
 void dx11_fx_editor_window::_on_contents_changed() {
+    _prev_text = _curr_text;
+    _prev_text = _prev_text.replace("\t", "    ");
     _curr_text = _ui.text_editor->document()->toPlainText();
-    if (_curr_text.endsWith("\n")) {
+    if (_prev_text == _curr_text || (_prev_text + "\n") == _curr_text) {
         return;
     }
-    _curr_text = _curr_text.replace("\n", "<br/>");
-    QString temp = _curr_text;
+    QString h_text = _curr_text;
+    h_text = h_text.replace("\n", "<br/>");
+    h_text = h_text.replace(" ", "&nbsp;");
+    h_text = h_text.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
     for (auto it = _keywords.begin(); it != _keywords.end(); ++it) {
-        _curr_text = _curr_text.replace(*it, QString("<font color='#0000ff'>") + (*it) + QString("</font>"));
+        h_text = h_text.replace(*it, QString("<font color='#0000ff'>") + (*it) + QString("</font>"));
     }
-    if (_curr_text == temp)
-        return;
     disconnect(_ui.text_editor->document(), &QTextDocument::contentsChanged, this, &dx11_fx_editor_window::_on_contents_changed);
     QTextCursor qtc = _ui.text_editor->textCursor();
-    _ui.text_editor->setHtml(_curr_text);
+    int p = qtc.position();
+    _ui.text_editor->setHtml(h_text);
+    qtc.setPosition(p);
     _ui.text_editor->setTextCursor(qtc);
     connect(_ui.text_editor->document(), &QTextDocument::contentsChanged, this, &dx11_fx_editor_window::_on_contents_changed);
 }
