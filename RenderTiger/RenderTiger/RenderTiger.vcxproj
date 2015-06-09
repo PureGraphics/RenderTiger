@@ -77,9 +77,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Common\src\global_error_msg.cpp" />
+    <ClCompile Include="Common\src\lua_dx11_global_error_msg.cpp" />
     <ClCompile Include="Common\src\timer.cpp" />
     <ClCompile Include="DX\src\dx11_fx_editor_window.cpp" />
     <ClCompile Include="DX\src\dx11_preview_window.cpp" />
+    <ClCompile Include="DX\src\lua_dx11_vertex_buffer.cpp" />
     <ClCompile Include="DX\src\qt5_dx11_app_framework.cpp" />
     <ClCompile Include="DX\src\dx11_vertex_buffer.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_dx11_fx_editor_window.cpp">
@@ -154,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\inc\global_error_msg.h" />
+    <ClInclude Include="Common\inc\lua_global_error_msg.h" />
     <ClInclude Include="Common\inc\timer.h" />
     <CustomBuild Include="DX\inc\dx11_preview_window.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
@@ -187,6 +190,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
     <ClInclude Include="DX\inc\dx11_vertex_buffer.h" />
+    <ClInclude Include="DX\inc\lua_dx11_vertex_buffer.h" />
     <ClInclude Include="GeneratedFiles\ui_dx11_fx_editor_window.h" />
     <ClInclude Include="GeneratedFiles\ui_dx11_preview_window.h" />
     <ClInclude Include="GeneratedFiles\ui_rendertiger.h" />

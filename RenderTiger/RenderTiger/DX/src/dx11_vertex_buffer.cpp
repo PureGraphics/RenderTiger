@@ -5,7 +5,8 @@ dx11_vertex_buffer::dx11_vertex_buffer() {
 }
 
 dx11_vertex_buffer::~dx11_vertex_buffer() {
-    
+    _vb_element_list.clear();
+    _ib_element_list.clear();
 }
 
 void dx11_vertex_buffer::add_vb_element(float f) {

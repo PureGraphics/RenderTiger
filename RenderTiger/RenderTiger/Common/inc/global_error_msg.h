@@ -22,6 +22,8 @@ private:
 public:
     void add_error_msg(QString msg);
     void clear();
+    int len() const;
+    QString operator[](uint i);
 private:
     QList<QString> _error_msg_list;
 };
