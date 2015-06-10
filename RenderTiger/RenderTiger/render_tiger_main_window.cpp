@@ -3,12 +3,21 @@
 #include <assert.h>
 #include <QMouseEvent>
 
+#include "lua.hpp"
+
+#include "lua_global_error_msg.h"
+#include "lua_dx11_vertex_buffer.h"
+
+lua_State *g_lua_state = nullptr;
+
 render_tiger_main_window::render_tiger_main_window(QWidget *parent)
 : QMainWindow(parent),
 _preview_window(nullptr),
-_fx_editor(nullptr) {
+_fx_editor(nullptr),
+_lua_editor(nullptr) {
     _ui.setupUi(this);
     _init_events();
+    _init_lua();
 }
 
 render_tiger_main_window::~render_tiger_main_window() {
@@ -19,6 +28,15 @@ void render_tiger_main_window::_init_events() {
     //connect(_ui.actionPreview, SIGNAL(QAction::activate()), this, SLOT(render_tiger_main_window::_on_action_preview()));
     connect(_ui.actionPreview, &QAction::triggered, this, &render_tiger_main_window::_on_action_preview);
     connect(_ui.actionShader_fx, &QAction::triggered, this, &render_tiger_main_window::_on_action_shader_fx);
+    connect(_ui.actionLua, &QAction::triggered, this, &render_tiger_main_window::_on_action_lua);
+}
+
+void render_tiger_main_window::_init_lua() {
+    g_lua_state = luaL_newstate();
+    luaL_openlibs(g_lua_state);
+
+    luaL_requiref(g_lua_state, "rendertiger.error_msg", lua_global_error_msg, 0);
+    luaL_requiref(g_lua_state, "rendertiger.vertex_buffer", lua_dx11_vertex_buffer, 0);
 }
 
 void render_tiger_main_window::_on_action_preview(bool checked) {
@@ -51,6 +69,21 @@ void render_tiger_main_window::_on_action_shader_fx(bool checked) {
     }
 }
 
+void render_tiger_main_window::_on_action_lua() {
+    if (_ui.actionLua->isChecked()) {
+        if (_lua_editor == nullptr) {
+            _lua_editor = new lua_editor_window(this);
+            _ui.mdiArea->addSubWindow(_lua_editor);
+        }
+        _lua_editor->showNormal();
+    }
+    else {
+        if (_lua_editor) {
+            _lua_editor->showMinimized();
+        }
+    }
+}
+
 void render_tiger_main_window::on_preview_window_close() {
     if (_preview_window != nullptr)
         delete _preview_window;
@@ -65,4 +98,12 @@ void render_tiger_main_window::on_fx_editor_close() {
     _fx_editor = nullptr;
 
     _ui.actionShader_fx->setChecked(false);
+}
+
+void render_tiger_main_window::on_lua_editor_close() {
+    if (_lua_editor != nullptr)
+        delete _lua_editor;
+    _lua_editor = nullptr;
+
+    _ui.actionLua->setChecked(false);
 }

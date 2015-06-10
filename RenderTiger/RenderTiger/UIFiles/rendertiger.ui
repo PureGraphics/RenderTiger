@@ -58,6 +58,7 @@
      <string>视图</string>
     </property>
     <addaction name="actionShader_fx"/>
+    <addaction name="actionLua"/>
     <addaction name="actionPreview"/>
    </widget>
    <widget class="QMenu" name="menu_4">
@@ -172,6 +173,14 @@
    </property>
    <property name="text">
     <string>编辑Shader(FX)</string>
+   </property>
+  </action>
+  <action name="actionLua">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>编辑Lua</string>
    </property>
   </action>
  </widget>

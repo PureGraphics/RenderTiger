@@ -125,6 +125,15 @@
     <ClCompile Include="Common\src\lua_dx11_global_error_msg.cpp">
       <Filter>Common\src</Filter>
     </ClCompile>
+    <ClCompile Include="Common\src\lua_editor_window.cpp">
+      <Filter>Common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_lua_editor_window.cpp">
+      <Filter>GeneratedFiles\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_lua_editor_window.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="rendertiger.qrc">
@@ -150,6 +159,12 @@
     </CustomBuild>
     <CustomBuild Include="DX\inc\dx11_fx_editor_window.h">
       <Filter>DX\inc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Common\inc\lua_editor_window.h">
+      <Filter>Common\inc</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UIFiles\lua_editor_window.ui">
+      <Filter>UIFiles</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +194,9 @@
     </ClInclude>
     <ClInclude Include="Common\inc\lua_global_error_msg.h">
       <Filter>Common\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_lua_editor_window.h">
+      <Filter>GeneratedFiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
