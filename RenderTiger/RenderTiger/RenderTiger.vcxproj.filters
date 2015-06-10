@@ -134,6 +134,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_lua_editor_window.cpp">
       <Filter>GeneratedFiles\Release</Filter>
     </ClCompile>
+    <ClCompile Include="Common\src\base_text_editor.cpp">
+      <Filter>Common\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="rendertiger.qrc">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_lua_editor_window.h">
       <Filter>GeneratedFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\inc\base_text_editor.h">
+      <Filter>Common\inc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

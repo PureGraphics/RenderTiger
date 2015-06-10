@@ -6,8 +6,9 @@
 #include <QString>
 
 #include "ui_lua_editor_window.h"
+#include "base_text_editor.h"
 
-class lua_editor_window : public QMainWindow {
+class lua_editor_window : public QMainWindow, public base_text_editor {
     Q_OBJECT
 public:
     lua_editor_window(QWidget *parent);
@@ -16,8 +17,9 @@ public:
     QString get_lua_src();
 protected: //Qt inner methods.
     void closeEvent(QCloseEvent *event);
+protected:
+    void _init_keywords() override;
 private:
-    void _init_keywords();
     void _init_events();
 private slots:
     void _on_contents_changed();
@@ -25,7 +27,6 @@ private:
     Ui::lua_editor_window _ui;
     QWidget *_parent;
 
-    QList<QString> _keywords;
     QString _curr_text;
     QString _prev_text;
 };

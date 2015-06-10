@@ -2,7 +2,7 @@
 #include "render_tiger_main_window.h"
 
 lua_editor_window::lua_editor_window(QWidget *parent)
-: QMainWindow(parent), _parent(parent),
+: QMainWindow(parent), base_text_editor(), _parent(parent),
 _curr_text(""), _prev_text("") {
     _ui.setupUi(this);
     _init_keywords();
@@ -62,25 +62,15 @@ void lua_editor_window::_init_events() {
 
 void lua_editor_window::_on_contents_changed() {
     _prev_text = _curr_text;
-    _prev_text = _prev_text.replace("\t", "    ");
     _curr_text = _ui.text_editor->document()->toPlainText();
     if (_prev_text == _curr_text || (_prev_text + "\n") == _curr_text) {
         return;
     }
-    QString h_text = _curr_text;
-    h_text = " " + h_text + " ";
-    h_text = h_text.replace("\n", "<br/>");
-    h_text = h_text.replace(" ", "&nbsp;");
-    h_text = h_text.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
-    for (auto it = _keywords.begin(); it != _keywords.end(); ++it) {
-        QString k = "&nbsp;" + (*it) + "&nbsp;";
-        h_text = h_text.replace(k, QString("&nbsp;<font color='#0000ff'>") + (*it) + QString("</font>&nbsp;"));
-    }
-    h_text = h_text.remove(0, 6);
-    h_text = h_text.remove(h_text.size() - 6, 6);
+    int tab = 0;
+    QString h_text = _highlight_keywords(_curr_text, tab);
     disconnect(_ui.text_editor->document(), &QTextDocument::contentsChanged, this, &lua_editor_window::_on_contents_changed);
     QTextCursor qtc = _ui.text_editor->textCursor();
-    int p = qtc.position();
+    int p = qtc.position() + tab;
     _ui.text_editor->setHtml(h_text);
     qtc.setPosition(p);
     _ui.text_editor->setTextCursor(qtc);
