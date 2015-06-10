@@ -2,7 +2,7 @@
 #include "render_tiger_main_window.h"
 
 dx11_fx_editor_window::dx11_fx_editor_window(QWidget *parent)
-: QMainWindow(parent), _parent(parent),
+: QMainWindow(parent), base_text_editor(), _parent(parent),
 _curr_text(""), _prev_text("") {
     _ui.setupUi(this);
     _init_keywords();

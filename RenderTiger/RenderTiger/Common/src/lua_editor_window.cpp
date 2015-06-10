@@ -54,6 +54,7 @@ void lua_editor_window::_init_keywords() {
     _keywords.push_back("VF");
     _keywords.push_back("_G");
     _keywords.push_back("io");
+    _keywords.push_back("require");
 }
 
 void lua_editor_window::_init_events() {

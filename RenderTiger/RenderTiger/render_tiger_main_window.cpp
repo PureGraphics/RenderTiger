@@ -96,7 +96,12 @@ void render_tiger_main_window::_on_action_compile() {
         return;
     }
     //test.
-    luaL_dostring(g_lua_state, lua_src.toStdString().c_str());
+    int err = luaL_dostring(g_lua_state, lua_src.toStdString().c_str());
+    if (err) {
+        const char *msg = lua_tostring(g_lua_state, -1);
+        QMessageBox::information(NULL, "lua error", msg, QMessageBox::Ok);
+        return;
+    }
 }
 
 void render_tiger_main_window::on_preview_window_close() {
