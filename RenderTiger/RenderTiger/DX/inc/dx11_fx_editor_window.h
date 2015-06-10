@@ -12,6 +12,8 @@ class dx11_fx_editor_window : public QMainWindow {
 public:
     dx11_fx_editor_window(QWidget *parent);
     ~dx11_fx_editor_window();
+public:
+    QString get_fx_src();
 protected: //Qt inner methods.
     void closeEvent(QCloseEvent *event);
 private:

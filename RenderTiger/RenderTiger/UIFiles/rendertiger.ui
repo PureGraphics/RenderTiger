@@ -65,7 +65,7 @@
     <property name="title">
      <string>帮助</string>
     </property>
-    <addaction name="actionGuanyy"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -88,6 +88,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionCompile"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
    <property name="minimumSize">
@@ -162,9 +164,19 @@
     <string>预览</string>
    </property>
   </action>
-  <action name="actionGuanyy">
+  <action name="actionCompile">
+   <property name="icon">
+    <iconset resource="../rendertiger.qrc">
+     <normaloff>:/RenderTiger/Logo</normaloff>:/RenderTiger/Logo</iconset>
+   </property>
    <property name="text">
-    <string>关于</string>
+    <string>编译</string>
+   </property>
+   <property name="iconText">
+    <string>编译</string>
+   </property>
+   <property name="toolTip">
+    <string>编译</string>
    </property>
   </action>
   <action name="actionShader_fx">
@@ -181,6 +193,11 @@
    </property>
    <property name="text">
     <string>编辑Lua</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>关于</string>
    </property>
   </action>
  </widget>

@@ -29,6 +29,7 @@ private slots:
     void _on_action_preview(bool checked = false);
     void _on_action_shader_fx(bool checked = false);
     void _on_action_lua();
+    void _on_action_compile();
 private:
     Ui::render_tiger_main_window_ui _ui;
 

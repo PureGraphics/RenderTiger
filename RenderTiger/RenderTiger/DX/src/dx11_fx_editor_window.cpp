@@ -15,6 +15,10 @@ dx11_fx_editor_window::~dx11_fx_editor_window() {
     
 }
 
+QString dx11_fx_editor_window::get_fx_src() {
+    return _ui.text_editor->toPlainText();
+}
+
 void dx11_fx_editor_window::closeEvent(QCloseEvent *event) {
     QMainWindow::closeEvent(event);
 
@@ -62,12 +66,20 @@ void dx11_fx_editor_window::_on_contents_changed() {
         return;
     }
     QString h_text = _curr_text;
+    h_text = " " + h_text + " ";
     h_text = h_text.replace("\n", "<br/>");
     h_text = h_text.replace(" ", "&nbsp;");
     h_text = h_text.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
     for (auto it = _keywords.begin(); it != _keywords.end(); ++it) {
-        h_text = h_text.replace(*it, QString("<font color='#0000ff'>") + (*it) + QString("</font>"));
+        QString k1 = "&nbsp;" + (*it) + "&nbsp;";
+        QString k2 = "<br/>" + (*it) + "&nbsp;";
+        QString k3 = "&nbsp;" + (*it) + "<br/>";
+        h_text = h_text.replace(k1, QString("&nbsp;<font color='#0000ff'>") + (*it) + QString("</font>&nbsp;"));
+        h_text = h_text.replace(k2, QString("<br/><font color='#0000ff'>") + (*it) + QString("</font>&nbsp;"));
+        h_text = h_text.replace(k3, QString("&nbsp;<font color='#0000ff'>") + (*it) + QString("</font><br/>"));
     }
+    h_text = h_text.remove(0, 6);
+    h_text = h_text.remove(h_text.size() - 6, 6);
     disconnect(_ui.text_editor->document(), &QTextDocument::contentsChanged, this, &dx11_fx_editor_window::_on_contents_changed);
     QTextCursor qtc = _ui.text_editor->textCursor();
     int p = qtc.position();

@@ -12,12 +12,14 @@ class lua_editor_window : public QMainWindow {
 public:
     lua_editor_window(QWidget *parent);
     ~lua_editor_window();
+public:
+    QString get_lua_src();
 protected: //Qt inner methods.
     void closeEvent(QCloseEvent *event);
 private:
     void _init_keywords();
     void _init_events();
-    private slots:
+private slots:
     void _on_contents_changed();
 private:
     Ui::lua_editor_window _ui;

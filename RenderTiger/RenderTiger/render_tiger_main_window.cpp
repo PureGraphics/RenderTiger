@@ -1,7 +1,9 @@
 #include "render_tiger_main_window.h"
 
 #include <assert.h>
+
 #include <QMouseEvent>
+#include <QMessageBox>
 
 #include "lua.hpp"
 
@@ -29,6 +31,7 @@ void render_tiger_main_window::_init_events() {
     connect(_ui.actionPreview, &QAction::triggered, this, &render_tiger_main_window::_on_action_preview);
     connect(_ui.actionShader_fx, &QAction::triggered, this, &render_tiger_main_window::_on_action_shader_fx);
     connect(_ui.actionLua, &QAction::triggered, this, &render_tiger_main_window::_on_action_lua);
+    connect(_ui.actionCompile, &QAction::triggered, this, &render_tiger_main_window::_on_action_compile);
 }
 
 void render_tiger_main_window::_init_lua() {
@@ -82,6 +85,18 @@ void render_tiger_main_window::_on_action_lua() {
             _lua_editor->showMinimized();
         }
     }
+}
+
+void render_tiger_main_window::_on_action_compile() {
+    if (_lua_editor == nullptr)
+        return;
+    QString lua_src = _lua_editor->get_lua_src();
+    if (lua_src.isEmpty()) {
+        QMessageBox::information(NULL, "", "I need lua code.", QMessageBox::Ok);
+        return;
+    }
+    //test.
+    luaL_dostring(g_lua_state, lua_src.toStdString().c_str());
 }
 
 void render_tiger_main_window::on_preview_window_close() {
