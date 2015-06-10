@@ -68,7 +68,7 @@ void qt5_dx11_app_framework::run() {
     _qtimer->start(1000.0f / _fps);
 }
 
-bool qt5_dx11_app_framework::init() {
+bool qt5_dx11_app_framework::init(const float *vb_data, int vb_sz, const int *ib_data, int ib_sz) {
     if (!_init_dx11())
         return false;
     return true;

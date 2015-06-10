@@ -21,7 +21,7 @@ public:
     float get_aspect_radio() const;
     void run();
 public:
-    virtual bool init();
+    virtual bool init(const float *vb_data, int vb_sz, const int *ib_data, int ib_sz);
     virtual void on_resize(QResizeEvent *event);
     virtual void on_update();
     virtual void on_draw();

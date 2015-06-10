@@ -51,10 +51,21 @@ void lua_editor_window::_init_keywords() {
     _keywords.push_back("until");
     _keywords.push_back("while");
 
-    _keywords.push_back("VF");
+    _keywords.push_back("table");
+    _keywords.push_back("insert");
+
     _keywords.push_back("_G");
     _keywords.push_back("io");
     _keywords.push_back("require");
+    _keywords.push_back("VF");
+    _keywords.push_back("VBF");
+    _keywords.push_back("VBT");
+    _keywords.push_back("IBT");
+    _keywords.push_back("BUFFER");
+    _keywords.push_back("COLOR");
+    _keywords.push_back("POSITION3");
+    _keywords.push_back("COLOR3");
+    _keywords.push_back("NORMAL3");
 }
 
 void lua_editor_window::_init_events() {

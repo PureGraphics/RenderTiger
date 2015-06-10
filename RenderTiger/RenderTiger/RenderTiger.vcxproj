@@ -78,7 +78,7 @@
   <ItemGroup>
     <ClCompile Include="Common\src\base_text_editor.cpp" />
     <ClCompile Include="Common\src\global_error_msg.cpp" />
-    <ClCompile Include="Common\src\lua_dx11_global_error_msg.cpp" />
+    <ClCompile Include="Common\src\lua_global_error_msg.cpp" />
     <ClCompile Include="Common\src\lua_editor_window.cpp" />
     <ClCompile Include="Common\src\timer.cpp" />
     <ClCompile Include="DX\src\dx11_fx_editor_window.cpp" />

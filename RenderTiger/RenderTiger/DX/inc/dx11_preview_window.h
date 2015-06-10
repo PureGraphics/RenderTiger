@@ -16,7 +16,7 @@ public:
     dx11_preview_window(QWidget *parent);
     ~dx11_preview_window();
 public:
-    bool init() override;
+    bool init(const float *vb_data, int vb_sz, const int *ib_data, int ib_sz) override;
     void on_resize(QResizeEvent *event) override;
     void on_update() override;
     void on_draw() override;
@@ -27,15 +27,15 @@ public:
 protected: //override Qt inner methods.
     void closeEvent(QCloseEvent *event) override;
 private:
-    void build_vertex_buffer();
-    void build_fx();
-    void build_vertex_layout();
+    void _build_vertex_buffer(const float *vb_data, int vb_sz, const int *ib_data, int ib_sz);
+    void _build_fx();
+    void _build_vertex_layout();
 private:
     Ui::dx11_preview_window _ui;
     QWidget *_parent;
 private:
-    ID3D11Buffer *_box_vb;
-    ID3D11Buffer *_box_ib;
+    ID3D11Buffer *_geometry_vb;
+    ID3D11Buffer *_geomery_ib;
     ID3DX11Effect *_fx;
     ID3DX11EffectTechnique *_tech;
     ID3DX11EffectMatrixVariable *_mat_wvp;

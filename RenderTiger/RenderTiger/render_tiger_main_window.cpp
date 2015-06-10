@@ -9,6 +9,7 @@
 
 #include "lua_global_error_msg.h"
 #include "lua_dx11_vertex_buffer.h"
+#include "dx11_vertex_buffer.h"
 
 lua_State *g_lua_state = nullptr;
 
@@ -42,10 +43,19 @@ void render_tiger_main_window::_init_lua() {
     luaL_requiref(g_lua_state, "rendertiger.vertex_buffer", lua_dx11_vertex_buffer, 0);
 }
 
+//test.
+extern dx11_vertex_buffer *g_test_dx11_vb;
+//end test.
+
 void render_tiger_main_window::_on_action_preview(bool checked) {
     if (_ui.actionPreview->isChecked()) {
         if (_preview_window == nullptr) {
             _preview_window = new dx11_preview_window(this);
+            const float *vb_data = g_test_dx11_vb->get_vb_pointer();
+            int vb_sz = g_test_dx11_vb->get_vb_byte_size();
+            const int *ib_data = g_test_dx11_vb->get_ib_pointer();
+            int ib_sz = g_test_dx11_vb->get_ib_byte_size();
+            _preview_window->init(vb_data, vb_sz, ib_data, ib_sz);
             _ui.mdiArea->addSubWindow(_preview_window);
         }
         _preview_window->showNormal();
@@ -95,13 +105,21 @@ void render_tiger_main_window::_on_action_compile() {
         QMessageBox::information(NULL, "", "I need lua code.", QMessageBox::Ok);
         return;
     }
-    //test.
-    int err = luaL_dostring(g_lua_state, lua_src.toStdString().c_str());
+    int top = lua_gettop(g_lua_state);
+    int err = luaL_loadfile(g_lua_state, "Lua/render_tiger_exchanger.lua");
     if (err) {
         const char *msg = lua_tostring(g_lua_state, -1);
-        QMessageBox::information(NULL, "lua error", msg, QMessageBox::Ok);
+        QMessageBox::information(NULL, "lua error_1", msg, QMessageBox::Ok);
         return;
     }
+    lua_pushstring(g_lua_state, _lua_editor->get_lua_src().toStdString().c_str());
+    err = lua_pcall(g_lua_state, 1, 0, NULL);
+    if (err) {
+        const char *msg = lua_tostring(g_lua_state, -1);
+        QMessageBox::information(NULL, "lua error_2", msg, QMessageBox::Ok);
+        return;
+    }
+    lua_pop(g_lua_state, 1);
 }
 
 void render_tiger_main_window::on_preview_window_close() {

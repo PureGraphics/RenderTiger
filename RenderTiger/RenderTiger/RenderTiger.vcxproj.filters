@@ -122,9 +122,6 @@
     <ClCompile Include="DX\src\lua_dx11_vertex_buffer.cpp">
       <Filter>DX\src</Filter>
     </ClCompile>
-    <ClCompile Include="Common\src\lua_dx11_global_error_msg.cpp">
-      <Filter>Common\src</Filter>
-    </ClCompile>
     <ClCompile Include="Common\src\lua_editor_window.cpp">
       <Filter>Common\src</Filter>
     </ClCompile>
@@ -135,6 +132,9 @@
       <Filter>GeneratedFiles\Release</Filter>
     </ClCompile>
     <ClCompile Include="Common\src\base_text_editor.cpp">
+      <Filter>Common\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\src\lua_global_error_msg.cpp">
       <Filter>Common\src</Filter>
     </ClCompile>
   </ItemGroup>
