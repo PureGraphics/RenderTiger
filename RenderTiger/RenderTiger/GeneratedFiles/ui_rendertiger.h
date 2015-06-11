@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -55,6 +56,8 @@ public:
     QWidget *dockWidgetContents;
     QDockWidget *dockWidget_2;
     QWidget *dockWidgetContents_2;
+    QHBoxLayout *horizontalLayout_2;
+    QTextEdit *output_textEdit;
 
     void setupUi(QMainWindow *render_tiger_main_window_ui)
     {
@@ -138,9 +141,20 @@ public:
         render_tiger_main_window_ui->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget);
         dockWidget_2 = new QDockWidget(render_tiger_main_window_ui);
         dockWidget_2->setObjectName(QStringLiteral("dockWidget_2"));
-        dockWidget_2->setMinimumSize(QSize(80, 120));
+        dockWidget_2->setMinimumSize(QSize(89, 120));
         dockWidgetContents_2 = new QWidget();
         dockWidgetContents_2->setObjectName(QStringLiteral("dockWidgetContents_2"));
+        horizontalLayout_2 = new QHBoxLayout(dockWidgetContents_2);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        output_textEdit = new QTextEdit(dockWidgetContents_2);
+        output_textEdit->setObjectName(QStringLiteral("output_textEdit"));
+        output_textEdit->setUndoRedoEnabled(false);
+        output_textEdit->setReadOnly(true);
+
+        horizontalLayout_2->addWidget(output_textEdit);
+
         dockWidget_2->setWidget(dockWidgetContents_2);
         render_tiger_main_window_ui->addDockWidget(static_cast<Qt::DockWidgetArea>(8), dockWidget_2);
 

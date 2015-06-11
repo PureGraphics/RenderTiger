@@ -24,6 +24,7 @@ void dx11_vertex_buffer::add_input_layout(QString layout) {
 void dx11_vertex_buffer::clear() {
     _vb_element_list.clear();
     _ib_element_list.clear();
+    _layout_list.clear();
 }
 
 const float * dx11_vertex_buffer::get_vb_pointer() const {

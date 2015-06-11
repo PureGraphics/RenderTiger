@@ -14,6 +14,8 @@ static int ll_new(lua_State *L) {
 static int ll_add(lua_State *L) {
     global_error_msg *gem = GET_GEM(L, 1);
     const char *msg = lua_tostring(L, 2);
+    if (msg == nullptr)
+        return 0;
     gem->add_error_msg(msg);
     return 0;
 }

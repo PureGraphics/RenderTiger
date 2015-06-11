@@ -5,7 +5,7 @@ package.path = "Lua/?.lua;"
 local error_msg = require("rendertiger.error_msg")
 local em = error_msg.new()
 local f, err = load(script)
-if err then
+if f == nil then
 	error_msg.add(em, err)
 	return
 end
@@ -13,6 +13,14 @@ end
 f()
 
 --require("render_tiger_lib")
+if BUFFER == nil then
+	error_msg.add(em, "[ERROR] You haven't creat BUFFER object.")
+	return
+elseif VBF == nil then
+	error_msg.add(em, "ERROR] You haven't set VBF(Vertex Buffer Format).")
+	return
+end
+
 local dx11_vb = require("rendertiger.vertex_buffer")
 local vbp = BUFFER._INST
 

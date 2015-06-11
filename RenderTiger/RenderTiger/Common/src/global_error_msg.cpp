@@ -9,7 +9,8 @@ global_error_msg * global_error_msg::get_instance() {
     return inst;
 }
 
-global_error_msg::global_error_msg() {
+global_error_msg::global_error_msg() 
+:_target(nullptr) {
     
 }
 
@@ -17,8 +18,14 @@ global_error_msg::~global_error_msg() {
     
 }
 
+void global_error_msg::set_output_target(QTextEdit *target) {
+    _target = target;
+}
+
 void global_error_msg::add_error_msg(QString msg) {
     _error_msg_list.push_back(msg);
+    assert(_target != nullptr);
+    _target->append(msg);
 }
 
 void global_error_msg::clear() {

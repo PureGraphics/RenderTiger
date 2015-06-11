@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QString>
+#include <QTextEdit>
 
 class error_msg_node {
 public:
@@ -20,12 +21,14 @@ private:
     global_error_msg();
     ~global_error_msg();
 public:
+    void set_output_target(QTextEdit *target);
     void add_error_msg(QString msg);
     void clear();
     int len() const;
     QString operator[](uint i);
 private:
     QList<QString> _error_msg_list;
+    QTextEdit *_target;
 };
 
 #endif
