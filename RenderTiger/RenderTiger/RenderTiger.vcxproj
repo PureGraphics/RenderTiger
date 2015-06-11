@@ -77,8 +77,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Common\src\base_text_editor.cpp" />
-    <ClCompile Include="Common\src\global_error_msg.cpp" />
-    <ClCompile Include="Common\src\lua_global_error_msg.cpp" />
+    <ClCompile Include="Common\src\global_msg.cpp" />
+    <ClCompile Include="Common\src\lua_global_msg.cpp" />
     <ClCompile Include="Common\src\lua_editor_window.cpp" />
     <ClCompile Include="Common\src\timer.cpp" />
     <ClCompile Include="DX\src\dx11_fx_editor_window.cpp" />
@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\inc\base_text_editor.h" />
-    <ClInclude Include="Common\inc\global_error_msg.h" />
+    <ClInclude Include="Common\inc\global_msg.h" />
     <CustomBuild Include="Common\inc\lua_editor_window.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing lua_editor_window.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
@@ -175,7 +175,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="Common\inc\lua_global_error_msg.h" />
+    <ClInclude Include="Common\inc\lua_global_msg.h" />
     <ClInclude Include="Common\inc\timer.h" />
     <CustomBuild Include="DX\inc\dx11_preview_window.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

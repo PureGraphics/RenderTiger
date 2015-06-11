@@ -2,11 +2,11 @@ local script = ...
 
 package.path = "Lua/?.lua;"
 
-local error_msg = require("rendertiger.error_msg")
-local em = error_msg.new()
+local msg = require("rendertiger.msg")
+local m = msg.new()
 local f, err = load(script)
 if f == nil then
-	error_msg.add(em, err)
+	msg.add_error(m, err)
 	return
 end
 
@@ -14,10 +14,10 @@ f()
 
 --require("render_tiger_lib")
 if BUFFER == nil then
-	error_msg.add(em, "[ERROR] You haven't creat BUFFER object.")
+	msg.add_error(m, "You haven't creat BUFFER object.")
 	return
 elseif VBF == nil then
-	error_msg.add(em, "ERROR] You haven't set VBF(Vertex Buffer Format).")
+	msg.add_error(m, "You haven't set VBF(Vertex Buffer Format).")
 	return
 end
 

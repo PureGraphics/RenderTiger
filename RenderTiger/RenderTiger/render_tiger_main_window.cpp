@@ -8,10 +8,10 @@
 
 #include "lua.hpp"
 
-#include "lua_global_error_msg.h"
+#include "lua_global_msg.h"
 #include "lua_dx11_vertex_buffer.h"
 #include "dx11_vertex_buffer.h"
-#include "global_error_msg.h"
+#include "global_msg.h"
 
 lua_State *g_lua_state = nullptr;
 
@@ -23,7 +23,7 @@ _lua_editor(nullptr) {
     _ui.setupUi(this);
     _init_events();
     _init_lua();
-    global_error_msg::get_instance()->set_output_target(_ui.output_textEdit);
+    global_msg::get_instance()->set_output_target(_ui.output_textEdit);
 }
 
 render_tiger_main_window::~render_tiger_main_window() {
@@ -42,7 +42,7 @@ void render_tiger_main_window::_init_lua() {
     g_lua_state = luaL_newstate();
     luaL_openlibs(g_lua_state);
 
-    luaL_requiref(g_lua_state, "rendertiger.error_msg", lua_global_error_msg, 0);
+    luaL_requiref(g_lua_state, "rendertiger.msg", lua_global_msg, 0);
     luaL_requiref(g_lua_state, "rendertiger.vertex_buffer", lua_dx11_vertex_buffer, 0);
 }
 
@@ -101,7 +101,7 @@ void render_tiger_main_window::_on_action_lua() {
 }
 
 void render_tiger_main_window::_on_action_compile() {
-    global_error_msg::get_instance()->clear();
+    global_msg::get_instance()->clear();
     if (g_test_dx11_vb)
         g_test_dx11_vb->clear();
     _ui.output_textEdit->clear();
@@ -110,24 +110,27 @@ void render_tiger_main_window::_on_action_compile() {
         return;
     QString lua_src = _lua_editor->get_lua_src();
     if (lua_src.isEmpty()) {
-        global_error_msg::get_instance()->add_error_msg("[ERROR] I need lua code.");
+        global_msg::get_instance()->add_error_msg("[ERROR] I need lua code.");
         return;
     }
-    int top = lua_gettop(g_lua_state);
+    lua_settop(g_lua_state, 0);
     int err = luaL_loadfile(g_lua_state, "Lua/render_tiger_exchanger.lua");
     if (err) {
         const char *msg = lua_tostring(g_lua_state, -1);
-        global_error_msg::get_instance()->add_error_msg(QString("[ERROR] render_tiger_exchanger::") + msg);
+        global_msg::get_instance()->add_error_msg(QString("render_tiger_exchanger::") + msg);
         return;
     }
     lua_pushstring(g_lua_state, _lua_editor->get_lua_src().toStdString().c_str());
     err = lua_pcall(g_lua_state, 1, 0, NULL);
     if (err) {
         const char *msg = lua_tostring(g_lua_state, -1);
-        global_error_msg::get_instance()->add_error_msg(QString("[ERROR] ") + msg);
+        global_msg::get_instance()->add_error_msg(msg);
         return;
     }
-    lua_pop(g_lua_state, 1);
+
+    if (!global_msg::get_instance()->has_error_msg()) {
+        global_msg::get_instance()->add_info_msg("Lua compile success");
+    }
 }
 
 void render_tiger_main_window::on_preview_window_close() {
