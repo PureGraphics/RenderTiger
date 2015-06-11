@@ -15,6 +15,10 @@
 
 lua_State *g_lua_state = nullptr;
 
+//for quick test.
+extern dx11_vertex_buffer *g_test_dx11_vb;
+//end test.
+
 render_tiger_main_window::render_tiger_main_window(QWidget *parent)
 : QMainWindow(parent),
 _preview_window(nullptr),
@@ -46,9 +50,19 @@ void render_tiger_main_window::_init_lua() {
     luaL_requiref(g_lua_state, "rendertiger.vertex_buffer", lua_dx11_vertex_buffer, 0);
 }
 
-//test.
-extern dx11_vertex_buffer *g_test_dx11_vb;
-//end test.
+void render_tiger_main_window::_compile_and_preview() {
+    if (_preview_window == nullptr) {
+        _preview_window = new dx11_preview_window(this);
+        _ui.mdiArea->addSubWindow(_preview_window);
+    }
+    const float *vb_data = g_test_dx11_vb->get_vb_pointer();
+    int vb_sz = g_test_dx11_vb->get_vb_byte_size();
+    const int *ib_data = g_test_dx11_vb->get_ib_pointer();
+    int ib_sz = g_test_dx11_vb->get_ib_byte_size();
+    _preview_window->init(vb_data, vb_sz, ib_data, ib_sz);
+    _preview_window->showNormal();
+    _ui.actionPreview->setChecked(true);
+}
 
 void render_tiger_main_window::_on_action_preview(bool checked) {
     if (_ui.actionPreview->isChecked()) {
@@ -110,7 +124,7 @@ void render_tiger_main_window::_on_action_compile() {
         return;
     QString lua_src = _lua_editor->get_lua_src();
     if (lua_src.isEmpty()) {
-        global_msg::get_instance()->add_error_msg("[ERROR] I need lua code.");
+        global_msg::get_instance()->add_error_msg("I need lua code.");
         return;
     }
     lua_settop(g_lua_state, 0);
@@ -130,6 +144,7 @@ void render_tiger_main_window::_on_action_compile() {
 
     if (!global_msg::get_instance()->has_error_msg()) {
         global_msg::get_instance()->add_info_msg("Lua compile success");
+        _compile_and_preview();
     }
 }
 

@@ -25,6 +25,7 @@ public:
 private:
     void _init_events();
     void _init_lua();
+    void _compile_and_preview();
 private slots:
     void _on_action_preview(bool checked = false);
     void _on_action_shader_fx(bool checked = false);
